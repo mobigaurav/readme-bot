@@ -1,6 +1,6 @@
 name: 'README Bot'
-description: 'Suggest README updates on a PR using your choice of LLM (OpenAI, Anthropic, Gemini).'
-author: 'readme-bot contributors'
+description: 'Suggest README updates on a PR using your choice of LLM (GitHub Models, OpenAI, Anthropic, or Gemini).'
+author: 'mobigaurav'
 branding:
   icon: 'book-open'
   color: 'purple'

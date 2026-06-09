@@ -1,8 +1,11 @@
 # 📚 README Bot
 
+> **Auto-suggest README updates on every pull request — powered by the LLM of your choice.**
+
 A GitHub Action that watches your pull requests, figures out which `README.md`
 files might be out of date, and posts a suggested diff as a PR comment — using
-**your** preferred LLM (OpenAI, Anthropic, or Gemini).
+**your** preferred LLM (GitHub Models by default, with OpenAI, Anthropic, or
+Gemini as alternatives).
 
 It is **non-invasive**: the bot never pushes commits to your branch. It just
 leaves a comment with a proposed diff and the full updated content. You decide
