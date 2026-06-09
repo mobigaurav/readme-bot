@@ -1,0 +1,81 @@
+name: 'README Bot'
+description: 'Suggest README updates on a PR using your choice of LLM (OpenAI, Anthropic, Gemini).'
+author: 'readme-bot contributors'
+branding:
+  icon: 'book-open'
+  color: 'purple'
+
+inputs:
+  github-token:
+    description: 'GitHub token used to read the PR diff and post the suggestion comment. Defaults to ${{ github.token }}.'
+    required: false
+    default: ${{ github.token }}
+
+  provider:
+    description: 'LLM provider: github-models | openai | anthropic | gemini.'
+    required: false
+    default: 'github-models'
+
+  api-key:
+    description: |
+      API key for the chosen provider.
+      For `github-models` you can omit this and the action will fall back to
+      `github-token` (which must have `models: read` permission). For other
+      providers, pass your key via secrets.
+    required: false
+    default: ''
+
+  model:
+    description: |
+      Model name. Defaults:
+        github-models = openai/gpt-4o-mini
+        openai        = gpt-4o-mini
+        anthropic     = claude-3-5-sonnet-latest
+        gemini        = gemini-1.5-pro
+    required: false
+    default: ''
+
+  scopes:
+    description: |
+      Newline- or comma-separated list of glob roots that map a code path to a README.
+      Example:
+        backend/**            -> backend/README.md
+        mobile/**             -> mobile/README.md
+        .                     -> README.md
+      If empty, every README.md in the repo is treated as a candidate and matched
+      against its containing directory.
+    required: false
+    default: ''
+
+  max-files:
+    description: 'Hard cap on changed files included in the prompt (per scope).'
+    required: false
+    default: '40'
+
+  max-diff-bytes:
+    description: 'Truncate the diff payload at this many bytes to keep prompts small.'
+    required: false
+    default: '40000'
+
+  comment-marker:
+    description: 'Hidden HTML marker used to find and update the previous comment in place.'
+    required: false
+    default: '<!-- readme-bot:comment -->'
+
+  dry-run:
+    description: 'If true, log the suggestion to the action log instead of commenting on the PR.'
+    required: false
+    default: 'false'
+
+  fail-on-error:
+    description: 'If true, exit non-zero on any unrecoverable error (otherwise the action soft-fails).'
+    required: false
+    default: 'false'
+
+outputs:
+  suggestions-count:
+    description: 'Number of READMEs the bot proposed updates for.'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+coverage/
+# dist/ is intentionally NOT ignored: GitHub Actions consumes the bundled
+# JavaScript directly from this folder. Run `npm run build` before publishing.

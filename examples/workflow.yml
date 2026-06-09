@@ -1,0 +1,40 @@
+name: README Bot
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  models: read
+
+jobs:
+  suggest-readme-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Default provider is `github-models`, which uses the workflow's
+      # GITHUB_TOKEN (with `models: read`). No third-party API key needed.
+      - uses: mobigaurav/readme-bot@v1
+        with:
+          # Optional: tell the bot which README owns which subtree.
+          # If omitted it auto-discovers every README.md in the repo.
+          scopes: |
+            backend/**  -> backend/README.md
+            mobile/**   -> mobile/README.md
+            frontend/** -> frontend/README.md
+            .           -> README.md
+
+  # ----------------------------------------------------------------------
+  # Alternate setup: bring-your-own provider (OpenAI / Anthropic / Gemini).
+  # ----------------------------------------------------------------------
+  # suggest-readme-updates-openai:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: mobigaurav/readme-bot@v1
+  #       with:
+  #         provider: openai
+  #         api-key: ${{ secrets.OPENAI_API_KEY }}
