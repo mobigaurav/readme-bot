@@ -9,10 +9,10 @@ inputs:
   github-token:
     description: |
       GitHub token used to read the PR diff and post the suggestion comment.
-      Pass `${{ github.token }}` in your workflow `with:` block. The action
-      metadata cannot default this value because the `github` context is
-      unavailable in action defaults; we fall back to the `GITHUB_TOKEN` env
-      var if you set one explicitly.
+      Pass the workflow GITHUB_TOKEN explicitly in your `with:` block (the
+      action metadata cannot default this value because the `github` context
+      is unavailable in action defaults). Falls back to the GITHUB_TOKEN env
+      var if you export one.
     required: false
     default: ''
 
